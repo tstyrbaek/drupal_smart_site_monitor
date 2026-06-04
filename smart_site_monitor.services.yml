@@ -1,0 +1,58 @@
+services:
+  smart_site_monitor.update_project_data_provider:
+    class: Drupal\smart_site_monitor\Service\UpdateProjectDataProvider
+    arguments:
+      - '@keyvalue.expirable'
+
+  smart_site_monitor.status_response_builder:
+    class: Drupal\smart_site_monitor\Service\StatusResponseBuilder
+    tags:
+      - { name: service_collector, tag: smart_site_monitor.status_collector, call: addCollector }
+
+  smart_site_monitor.auth_header_subscriber:
+    class: Drupal\smart_site_monitor\EventSubscriber\SmartSiteMonitorAuthHeaderSubscriber
+    arguments:
+      - '@config.factory'
+    tags:
+      - { name: event_subscriber }
+
+  smart_site_monitor.site_status_collector:
+    class: Drupal\smart_site_monitor\StatusCollector\SiteStatusCollector
+    arguments:
+      - '@state'
+      - '@config.factory'
+    tags:
+      - { name: smart_site_monitor.status_collector }
+
+  smart_site_monitor.drupal_update_collector:
+    class: Drupal\smart_site_monitor\StatusCollector\DrupalUpdateCollector
+    arguments:
+      - '@smart_site_monitor.update_project_data_provider'
+      - '@state'
+    tags:
+      - { name: smart_site_monitor.status_collector }
+
+  smart_site_monitor.modules_status_collector:
+    class: Drupal\smart_site_monitor\StatusCollector\ModulesStatusCollector
+    arguments:
+      - '@update.manager'
+      - '@smart_site_monitor.update_project_data_provider'
+      - '@state'
+    tags:
+      - { name: smart_site_monitor.status_collector }
+
+  smart_site_monitor.cron_status_collector:
+    class: Drupal\smart_site_monitor\StatusCollector\CronStatusCollector
+    arguments:
+      - '@state'
+    tags:
+      - { name: smart_site_monitor.status_collector }
+
+  smart_site_monitor.error_count_collector:
+    class: Drupal\smart_site_monitor\StatusCollector\ErrorCountCollector
+    arguments:
+      - '@database'
+      - '@module_handler'
+      - '@datetime.time'
+    tags:
+      - { name: smart_site_monitor.status_collector }

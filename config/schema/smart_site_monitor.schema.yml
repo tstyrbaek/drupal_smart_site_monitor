@@ -1,0 +1,7 @@
+smart_site_monitor.settings:
+  type: config_object
+  label: 'Smart Site Monitor settings'
+  mapping:
+    api_token:
+      type: string
+      label: 'API token'

@@ -1,0 +1,41 @@
+smart_site_monitor.status:
+  path: '/smart-site-monitor/status'
+  defaults:
+    _controller: '\Drupal\smart_site_monitor\Controller\StatusController::status'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+smart_site_monitor.status_json:
+  path: '/smart-site-monitor/status.json'
+  defaults:
+    _controller: '\Drupal\smart_site_monitor\Controller\StatusController::status'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+smart_site_monitor.status_format:
+  path: '/smart-site-monitor/status.{_format}'
+  defaults:
+    _controller: '\Drupal\smart_site_monitor\Controller\StatusController::status'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+    _format: 'json'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+smart_site_monitor.settings:
+  path: '/admin/config/system/smart-site-monitor'
+  defaults:
+    _form: '\Drupal\smart_site_monitor\Form\SmartSiteMonitorSettingsForm'
+    _title: 'Smart Site Monitor'
+  requirements:
+    _permission: 'administer smart site monitor'

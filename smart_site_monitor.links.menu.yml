@@ -1,0 +1,6 @@
+smart_site_monitor.settings:
+  title: 'Smart Site Monitor'
+  description: 'Configure Smart Site Monitor settings.'
+  parent: system.admin_config_system
+  route_name: smart_site_monitor.settings
+  weight: 100
