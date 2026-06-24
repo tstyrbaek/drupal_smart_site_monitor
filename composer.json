@@ -1,0 +1,9 @@
+{
+  "name": "tstyrbaek/smart_site_monitor",
+  "type": "drupal-custom-module",
+  "description": "Custom module for Smart Site Monitor.",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^10 || ^11"
+  }
+}
