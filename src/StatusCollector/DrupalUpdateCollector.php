@@ -31,7 +31,7 @@ class DrupalUpdateCollector implements StatusCollectorInterface {
       $current_version = $version;
       $latest_version = (string) ($drupal_project['recommended'] ?? $drupal_project['latest_version'] ?? $current_version);
       $update_status = $this->mapStatus($status);
-      $security_updates = isset($drupal_project['security updates']) && is_array($drupal_project['security updates']) ? count($drupal_project['security updates']) : 0;
+      $security_updates = $this->countSecurityUpdates($status, $drupal_project);
     }
 
     $available_releases = \Drupal::keyValueExpirable('update_available_releases')->get('drupal');
@@ -63,6 +63,24 @@ class DrupalUpdateCollector implements StatusCollectorInterface {
       UpdateManagerInterface::REVOKED => 'revoked',
       default => NULL,
     };
+  }
+
+  /**
+   * Counts security updates that are relevant for the installed core version.
+   *
+   * Drupal's raw update project data can still contain security releases even
+   * when the installed version is already current. In that case we do not want
+   * to report a non-zero count, because there is no actionable security update
+   * for the site owner.
+   */
+  protected function countSecurityUpdates(?int $status, array $drupal_project): int {
+    if ($status === UpdateManagerInterface::CURRENT) {
+      return 0;
+    }
+
+    return isset($drupal_project['security updates']) && is_array($drupal_project['security updates'])
+      ? count($drupal_project['security updates'])
+      : 0;
   }
 
 }

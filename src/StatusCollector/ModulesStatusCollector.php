@@ -38,7 +38,7 @@ class ModulesStatusCollector implements StatusCollectorInterface {
       }
       $current_version = (string) ($project['info']['version'] ?? $status_data['existing_version'] ?? '');
       $latest_version = (string) ($status_data['recommended'] ?? $status_data['latest_version'] ?? $current_version);
-      $has_security_update = !empty($status_data['security updates']) || (($status_data['status'] ?? NULL) === UpdateManagerInterface::NOT_SECURE);
+      $has_security_update = $this->hasSecurityUpdate($status_data);
       $has_update = $has_security_update || in_array($status_data['status'] ?? NULL, [
         UpdateManagerInterface::NOT_CURRENT,
         UpdateManagerInterface::NOT_SUPPORTED,
@@ -85,6 +85,17 @@ class ModulesStatusCollector implements StatusCollectorInterface {
       ],
       'modules' => $modules,
     ];
+  }
+
+  /**
+   * Determines whether a module has a security update that is relevant now.
+   */
+  protected function hasSecurityUpdate(array $status_data): bool {
+    if (($status_data['status'] ?? NULL) === UpdateManagerInterface::CURRENT) {
+      return FALSE;
+    }
+
+    return !empty($status_data['security updates']) || (($status_data['status'] ?? NULL) === UpdateManagerInterface::NOT_SECURE);
   }
 
 }

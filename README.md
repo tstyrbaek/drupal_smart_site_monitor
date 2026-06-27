@@ -109,7 +109,7 @@ Alle endpoints:
 | Sektion | Indhold |
 |---------|---------|
 | `site_status` | Sidenavn, online/offline (vedligeholdelsestilstand) |
-| `cms` | Drupal-version, anbefalet version, `update_status` (`current`, `update_available`, `security_update_required`, `not_supported`, `revoked`), antal sikkerhedsopdateringer for core |
+| `cms` | Drupal-version, anbefalet version, `update_status` (`current`, `update_available`, `security_update_required`, `not_supported`, `revoked`), antal relevante sikkerhedsopdateringer for core |
 | `module_summary` | Antal moduler, tilgængelige opdateringer og sikkerhedsopdateringer |
 | `modules` | Liste sorteret alfabetisk: navn, `current`, `latest`, `security` |
 | `cron` | Seneste cron-kørsel (timestamp + ISO 8601 UTC) |
