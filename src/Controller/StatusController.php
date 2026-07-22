@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class StatusController implements ContainerInjectionInterface {
+final class StatusController implements ContainerInjectionInterface {
 
   public function __construct(
     protected StatusResponseBuilder $statusResponseBuilder,
@@ -17,7 +17,7 @@ class StatusController implements ContainerInjectionInterface {
   ) {}
 
   public static function create(ContainerInterface $container): static {
-    return new static(
+    return new self(
       $container->get('smart_site_monitor.status_response_builder'),
       $container->get('config.factory'),
     );

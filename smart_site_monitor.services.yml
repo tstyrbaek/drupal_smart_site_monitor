@@ -3,6 +3,7 @@ services:
     class: Drupal\smart_site_monitor\Service\UpdateProjectDataProvider
     arguments:
       - '@keyvalue.expirable'
+      - '@module_handler'
 
   smart_site_monitor.status_response_builder:
     class: Drupal\smart_site_monitor\Service\StatusResponseBuilder

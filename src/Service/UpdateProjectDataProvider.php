@@ -2,6 +2,7 @@
 
 namespace Drupal\smart_site_monitor\Service;
 
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 
 /**
@@ -13,6 +14,7 @@ class UpdateProjectDataProvider {
 
   public function __construct(
     protected KeyValueExpirableFactoryInterface $keyValueExpirableFactory,
+    protected ModuleHandlerInterface $moduleHandler,
   ) {}
 
   /**
@@ -28,6 +30,7 @@ class UpdateProjectDataProvider {
     }
 
     $this->keyValueExpirableFactory->get('update')->delete('update_project_data');
+    $this->moduleHandler->loadInclude('update', 'inc', 'update.compare');
 
     $available = update_get_available(TRUE);
     if (empty($available)) {
