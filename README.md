@@ -118,7 +118,7 @@ Alle endpoints:
 
 ## Opdateringsdata
 
-`UpdateProjectDataProvider` invaliderer Drupals cachede `update_project_data` ved hvert API-kald og genberegner status, så svaret ikke er op til en time gammelt (som standard update-cache). Det svarer til adfærden på **Reports** → **Available updates**, men uden at besøge admin-siden.
+`UpdateProjectDataProvider` invaliderer både `update_project_projects` (installerede versioner) og `update_project_data` (beregnet status) ved hvert API-kald, nulstiller UpdateManagers in-memory liste og genberegner status. Det sikrer, at dashboard-polls ser de versioner der faktisk ligger på disken efter Composer/Drush-opgraderinger — uden at nogen behøver at logge ind og besøge **Extend** eller **Available updates**.
 
 ## Arkitektur
 

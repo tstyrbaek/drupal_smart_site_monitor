@@ -15,8 +15,10 @@ class ModulesStatusCollector implements StatusCollectorInterface {
   ) {}
 
   public function collect(): array {
-    $projects = $this->updateManager->getProjects();
+    // Refresh calculated status first so UpdateManager rebuilds installed
+    // project metadata from disk before we read getProjects().
     $project_data = $this->updateProjectDataProvider->getProjectData();
+    $projects = $this->updateManager->getProjects();
     $available_releases = \Drupal::keyValueExpirable('update_available_releases')->getAll();
 
     $modules = [];

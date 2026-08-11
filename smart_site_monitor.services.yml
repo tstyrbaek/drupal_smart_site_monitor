@@ -4,6 +4,7 @@ services:
     arguments:
       - '@keyvalue.expirable'
       - '@module_handler'
+      - '@update.manager'
 
   smart_site_monitor.status_response_builder:
     class: Drupal\smart_site_monitor\Service\StatusResponseBuilder
